@@ -1,17 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Bubble = styled.div`
-  background-color: ${({ isMine }) => (isMine ? '#daf8cb' : '#f1f0f0')};
-  border-radius: 10px;
+const BubbleContainer = styled.div`
+  display: flex;
+  justify-content: ${(props) => (props.isMine ? 'flex-end' : 'flex-start')};
   padding: 10px;
-  margin: 5px;
+`;
+
+const Bubble = styled.div`
+  background-color: ${(props) => (props.isMine ? '#007bff' : '#28a745')}; /* Blue for sent, Green for received */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
   max-width: 60%;
-  align-self: ${({ isMine }) => (isMine ? 'flex-end' : 'flex-start')};
+  word-wrap: break-word;
 `;
 
 const ChatBubble = ({ message, isMine }) => {
-  return <Bubble isMine={isMine}>{message}</Bubble>;
+  return (
+    <BubbleContainer isMine={isMine}>
+      <Bubble isMine={isMine}>{message}</Bubble>
+    </BubbleContainer>
+  );
 };
 
 export default ChatBubble;

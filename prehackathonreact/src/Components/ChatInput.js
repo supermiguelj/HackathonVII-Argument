@@ -5,6 +5,7 @@ const InputContainer = styled.div`
   display: flex;
   padding: 10px;
   border-top: 1px solid #ddd;
+  height: 50px;  // Adjust the height to fit better
 `;
 
 const InputField = styled.input`
