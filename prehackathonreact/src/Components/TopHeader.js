@@ -22,10 +22,11 @@ const Title = styled.h1`
   font-size: 24px;       // Font size
 `;
 
+// Actual Title of Webpage
 const TopHeader = () => {
   return (
     <Header>
-      <Title>Argument</Title>  // Title of the webpage
+      <Title>Argument</Title>
     </Header>
   );
 };

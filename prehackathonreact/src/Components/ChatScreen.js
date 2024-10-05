@@ -8,11 +8,12 @@ import TopHeader from './TopHeader'; // Import the TopHeader component
 
 // Styled component for the overall chat container
 const ChatContainer = styled.div`
-  height: 750px; // Fixed height for the chat area
+  height: 700px; // Fixed height for the chat area
   display: flex; // Use flexbox layout
   flex-direction: column; // Arrange children in a column
   border: 1px solid #ddd; // Light gray border around the chat area
   padding: 10px; // Padding inside the container
+
 `;
 
 // Styled component for the message list area
