@@ -19,13 +19,20 @@ const Bubble = styled.div`
 `;
 
 // ChatBubble component receives message and isMine props
-const ChatBubble = ({ message, isMine }) => {
+const ChatBubble = ({ message, sender, timeStamp, isMine }) => {
+  // console.log("sender: ", sender);
+  // console.log("isMine before: ", isMine);
+  // isMine = Boolean(isMine);
+  // console.log('isMine type:', typeof isMine);
+  // console.log('isMine:', isMine);
   return (
     // Render the BubbleContainer with appropriate alignment based on isMine
+    <div><p>{timeStamp}</p>
     <BubbleContainer isMine={isMine}>
       {/* Render the Bubble with the message content */}
-      <Bubble isMine={isMine}>{message}</Bubble>
+      <Bubble isMine={isMine}>{sender}: {message}</Bubble>
     </BubbleContainer>
+    </div>
   );
 };
 

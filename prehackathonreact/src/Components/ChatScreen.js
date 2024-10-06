@@ -5,6 +5,7 @@ import ChatInput from './ChatInput';    // Component for the chat input field
 import SockJS from 'sockjs-client';     // Library for SockJS WebSocket client
 import { Stomp } from '@stomp/stompjs'; // Stomp client for WebSocket messaging
 import TopHeader from './TopHeader';    // Component for the top header
+// import LoginScreen from './LoginScreen';
 
 // Styled component for the overall chat container
 const ChatContainer = styled.div`
@@ -22,6 +23,7 @@ const MessageList = styled.div`
   padding: 10px;
 `;
 
+
 // ChatScreen component, receives the username as a prop
 const ChatScreen = ({ username }) => {  
   // State to store the list of chat messages
@@ -38,16 +40,19 @@ const ChatScreen = ({ username }) => {
 
   // useEffect to initialize WebSocket connection and subscribe to message updates
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/ws'); // Create SockJS connection
+    const socket = new SockJS('http://localhost:8080/websocket'); // Create SockJS connection
     const client = Stomp.over(socket);                     // Wrap it with STOMP protocol
 
     // Connect to the server and subscribe to the message topic
     client.connect({}, () => {
       setIsConnected(true);  // Set connection state to true
-      client.subscribe('/topic/messages', (message) => {
+      //Event listener
+      client.subscribe('/topic/public', (message) => {
         // Parse and handle the incoming message
         const receivedMessage = JSON.parse(message.body);
-        setMessages((prev) => [...prev, { text: receivedMessage.text, isMine: false }]);
+   
+        setMessages((prev) => [...prev, {sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp}]);
+   
       });
     });
 
@@ -66,12 +71,12 @@ const ChatScreen = ({ username }) => {
 
   // Function to handle sending a new message
   const handleSendMessage = (message) => {
-    const newMessage = { text: message, isMine: true }; // Create a new message object
-    setMessages((prev) => [...prev, newMessage]);       // Add the message to the local state
+    const newMessage = {sender: username, content: message }; // Create a new message object
+    // setMessages((prev) => [...prev, newMessage]);       // Add the message to the local state
 
     // Send the message via the STOMP client if connected
     if (stompClient && isConnected) {
-      stompClient.send('/app/chat', {}, JSON.stringify(newMessage)); // Send message to server
+      stompClient.send('/app/chat.send', {}, JSON.stringify(newMessage)); // Send message to server
     } else {
       console.error('STOMP client is not connected.'); // Error handling if the client is disconnected
     }
@@ -87,7 +92,7 @@ const ChatScreen = ({ username }) => {
         <MessageList>
           {/* Loop through the messages array and render a ChatBubble for each message */}
           {messages.map((msg, index) => (
-            <ChatBubble key={index} message={msg.text} isMine={msg.isMine} />
+            <ChatBubble key={index} message={msg.content} sender={msg.sender} timeStamp={msg.timeStamp} isMine={username == msg.sender} />
           ))}
           {/* Dummy div to scroll to the bottom of the chat */}
           <div ref={chatEndRef} />
