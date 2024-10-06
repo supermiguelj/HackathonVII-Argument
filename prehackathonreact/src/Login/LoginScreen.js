@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function ArgumentApp() {
+function LoginScreen({ onLogin }) { // Accept the onLogin function as a prop
   const [username, setUsername] = useState('');
 
   const handleInputChange = (event) => {
@@ -8,7 +8,11 @@ function ArgumentApp() {
   };
 
   const handleSubmit = () => {
-    console.log(`Username entered: ${username}`);
+    if (username.trim()) { // Make sure the username is not empty
+      onLogin(username);   // Call the onLogin function passed as a prop
+    } else {
+      alert('Please enter a valid username'); // Optional: alert for empty username
+    }
   };
 
   return (
@@ -17,7 +21,7 @@ function ArgumentApp() {
         <h1>Welcome to Argument!</h1>
         <input 
           type="text" 
-          placeholder="enter username" 
+          placeholder="Enter username" 
           value={username} 
           onChange={handleInputChange} 
           style={{ padding: '10px', borderRadius: '15px', border: '1px solid #ccc', marginBottom: '10px' }}
@@ -34,4 +38,4 @@ function ArgumentApp() {
   );
 }
 
-export default ArgumentApp;
+export default LoginScreen;
