@@ -35,7 +35,7 @@ function LoginScreen({ onLogin }) {
         style={{ 
           backgroundColor: '#d3d3d3', 
           padding: '8%', 
-          borderRadius: '15px', 
+          borderRadius: '50px', 
           textAlign: 'center' 
         }}
       >

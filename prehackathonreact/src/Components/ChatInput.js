@@ -7,6 +7,7 @@ const InputContainer = styled.div`
   padding: 10px; // Add padding around the container
   border-top: 1px solid #ddd; // Add a top border to separate input from chat messages
   height: 50px; // Adjust the height to fit better
+  border-radius: 10px;
 `;
 
 // Styled component for the text input field
@@ -14,7 +15,7 @@ const InputField = styled.input`
   flex-grow: 1; // Allow the input field to grow and take up available space
   padding: 10px; // Padding inside the input field
   border: 1px solid #ddd; // Light gray border for the input field
-  border-radius: 4px; // Rounded corners for the input field
+  border-radius: 10px; // Rounded corners for the input field
   font-size: 16px; // Font size for the input text
 `;
 
@@ -25,7 +26,7 @@ const SendButton = styled.button`
   background-color: #007bff; // Blue background color for the button
   color: white; // White text color for the button
   border: none; // No border for the button
-  border-radius: 4px; // Rounded corners for the button
+  border-radius: 10px; // Rounded corners for the button
   cursor: pointer; // Pointer cursor on hover
 
   &:hover {

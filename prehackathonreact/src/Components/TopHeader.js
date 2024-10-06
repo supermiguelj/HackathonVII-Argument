@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Header = styled.header`
   background-color: #333;  // Dark background color
   color: white;             // White text color
-  padding: 10px;           // Padding for the header
+  padding: 2%;           // Padding for the header
   display: flex;           // Flexbox for layout
   align-items: center;     // Center items vertically
   justify-content: flex-start; // Align items to the start
