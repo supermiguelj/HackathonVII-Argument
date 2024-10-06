@@ -23,11 +23,9 @@ function App() {
           <LoginScreen onLogin={handleLogin} /> // If not logged in, show LoginScreen
         ) : ( // If logged in
           <Routes> {/* Define the application routes */}
-            <Route path="/chat/1" element={<ChatScreen username={username} />} /> {/* Chat room 1 */}
-            <Route path="/chat/2" element={<ChatScreen username={username} />} /> {/* Chat room 2 */}
-            <Route path="/chat/3" element={<ChatScreen username={username} />} /> {/* Chat room 3 */}
+            <Route path="/:chatRoom" element={<ChatScreen username={username} />} />
             {/* Redirect to chat1 by default if user visits the root path */}
-            <Route path="/" element={<Navigate to="/chat/1" replace />} /> 
+            <Route path="/" element={<Navigate to="/general" replace />} /> 
           </Routes>
         )}
       </div>

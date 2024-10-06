@@ -6,6 +6,8 @@ import ChatInput from './ChatInput';    // Component for the chat input field
 import SockJS from 'sockjs-client';     // Library for SockJS WebSocket client
 import { Stomp } from '@stomp/stompjs'; // Stomp client for WebSocket messaging
 import TopHeader from './TopHeader';    // Component for the top header
+import { useParams } from 'react-router-dom'; // Import useParams to access route parameters
+
 
 // Styled component for the overall chat container
 const ChatContainer = styled.div`
@@ -31,6 +33,7 @@ const WelcomeContainer = styled.div`
 `;
 
 const ChatScreen = ({ username }) => {  
+  const { chatRoom } = useParams(); // Get the chat room name from URL parameters
   const [messages, setMessages] = useState([]); // State to store the list of chat messages
   const [stompClient, setStompClient] = useState(null); // State to store the STOMP client for WebSocket communication
   const [isConnected, setIsConnected] = useState(false); // State to check if the WebSocket client is connected
@@ -45,9 +48,35 @@ const ChatScreen = ({ username }) => {
     client.connect({}, () => {
       setIsConnected(true);  // Set connection state to true
       // Event listener
-      client.subscribe('/topic/public', (message) => {
+      client.subscribe('/topic/general', (message) => {
+        // console.log("message received at ", chatRoom);
         const receivedMessage = JSON.parse(message.body);
-        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp }]);
+        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp, destination: receivedMessage.destination }]);
+      });
+      client.subscribe('/topic/economics', (message) => {
+        // console.log("message received at ", chatRoom);
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp, destination: receivedMessage.destination }]);
+      });
+      client.subscribe('/topic/climate-change', (message) => {
+        // console.log("message received at ", chatRoom);
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp, destination: receivedMessage.destination }]);
+      });
+      client.subscribe('/topic/government', (message) => {
+        // console.log("message received at ", chatRoom);
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp, destination: receivedMessage.destination }]);
+      });
+      client.subscribe('/topic/capital-punishment', (message) => {
+        // console.log("message received at ", chatRoom);
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp, destination: receivedMessage.destination }]);
+      });
+      client.subscribe('/topic/euthanasia', (message) => {
+        // console.log("message received at ", chatRoom);
+        const receivedMessage = JSON.parse(message.body);
+        setMessages((prev) => [...prev, { sender: receivedMessage.sender, content: receivedMessage.content, timeStamp: receivedMessage.timeStamp, destination: receivedMessage.destination }]);
       });
     });
 
@@ -57,7 +86,7 @@ const ChatScreen = ({ username }) => {
     return () => {
       if (client) client.disconnect();
     };
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, [chatRoom]); // Empty dependency array ensures this runs only once on mount
 
   // useEffect to auto-scroll the chat to the latest message whenever a new message is added
   useEffect(() => {
@@ -66,7 +95,7 @@ const ChatScreen = ({ username }) => {
 
   // Function to handle sending a new message
   const handleSendMessage = (message) => {
-    const newMessage = { sender: username, content: message }; // Create a new message object
+    const newMessage = { sender: username, content: message, destination: chatRoom}; // Create a new message object
     if (stompClient && isConnected) {
       stompClient.send('/app/chat.send', {}, JSON.stringify(newMessage)); // Send message to server
     } else {
@@ -78,7 +107,7 @@ const ChatScreen = ({ username }) => {
     <>
       <TopHeader /> {/* Top header component, optional for showing username or other info */}
       <WelcomeContainer>
-        <h2>Welcome, {username}!</h2> {/* Display welcome message with username */}
+        <h2>{(chatRoom.replace('-', ' ').toUpperCase())}</h2> {/* Display welcome message with username */}
       </WelcomeContainer>
       
       <div style={{ display: 'flex' }}>
@@ -86,10 +115,13 @@ const ChatScreen = ({ username }) => {
         <ChatContainer>
           <MessageList>
             {/* Loop through the messages array and render a ChatBubble for each message */}
-            {messages.map((msg, index) => {
-              const prevMsg = messages[index - 1];
+            {messages.filter(msg => msg.destination == chatRoom).map((msg, index, filteredMessages) => {
+              const prevMsg = filteredMessages[index - 1];
+              // console.log("iteration");
+              // console.log("prevmsg ", prevMsg);
               // Show sender and timestamp only if it's the first message or the sender is different from the previous one
               const showSender = !prevMsg || prevMsg.sender !== msg.sender;
+              // console.log("showsender ", showSender);
 
               return (
                 <ChatBubble

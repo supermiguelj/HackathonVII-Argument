@@ -10,6 +10,7 @@ public class ChatMessage {
     private String sender;
     private MessageType type;
     private String timeStamp;
+    private String destination;
 
     /**
      * Enum representing the type of the chat message.
@@ -32,6 +33,11 @@ public class ChatMessage {
      */
     public String getContent() {
         return content;
+    }
+
+    public String getDestination()
+    {
+        return destination;
     }
 
     /**

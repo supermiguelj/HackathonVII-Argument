@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import bgImage from '../images/bgpic.jpeg';  // Import the background image
 
 // LoginScreen component, receives the onLogin function as a prop from the parent component
-function LoginScreen({ onLogin }) { 
+function LoginScreen({ onLogin }) {
   // State hook to store the entered username
   const [username, setUsername] = useState('');
 
@@ -24,7 +25,7 @@ function LoginScreen({ onLogin }) {
     if (e.key === 'Enter') {
       handleSubmit();
     }
-  }
+  };
 
   // The return function defines the UI elements of the LoginScreen
   return (
@@ -33,14 +34,17 @@ function LoginScreen({ onLogin }) {
         display: 'flex', 
         justifyContent: 'center', 
         alignItems: 'center', 
-        height: '100vh', 
-        backgroundColor: '#f0f0f0' 
+        height: '100vh',   // Full viewport height
+        backgroundImage: `url(${bgImage})`,  // Set the background image
+        backgroundSize: 'cover',             // Ensure the image covers the entire background
+        backgroundPosition: 'center',        // Center the image
+        backgroundRepeat: 'no-repeat'        // Prevent the image from repeating
       }}
     >
       {/* Outer container for the login form */}
       <div 
         style={{ 
-          backgroundColor: '#d3d3d3', 
+          backgroundColor: 'rgba(211, 211, 211, 0.85)', // Light gray background with transparency
           padding: '8%', 
           borderRadius: '50px', 
           textAlign: 'center' 

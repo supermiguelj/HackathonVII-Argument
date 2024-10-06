@@ -34,12 +34,12 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <NavLink> </NavLink>
-      <NavLink to="/LoginScreen.js">General</NavLink>
-      <NavLink to="/chat2">Economics</NavLink>
-      <NavLink to="/chat3">Climate change</NavLink>
-      <NavLink to="/chat3">Big or small gov</NavLink>
-      <NavLink to="/chat3">Capital punishment</NavLink>
-      <NavLink to="/chat3">Assisted euthanasia</NavLink>
+      <NavLink to="/general">General</NavLink>
+      <NavLink to="/economics">Economics</NavLink>
+      <NavLink to="/climate-change">Climate Change</NavLink>
+      <NavLink to="/government">Government</NavLink>
+      <NavLink to="/capital-punishment">Capital Punishment</NavLink>
+      <NavLink to="/euthanasia">Assisted Euthanasia</NavLink>
       <NavLink> </NavLink>
     </SidebarContainer>
   );

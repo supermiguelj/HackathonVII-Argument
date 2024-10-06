@@ -10,7 +10,7 @@ const BubbleContainer = styled.div`
 
 // Styled component for the chat bubble itself
 const Bubble = styled.div`
-  background-color: ${(props) => (props.isMine ? '#007bff' : '#28a745')}; /* Blue for sent messages, Green for received messages */
+  background-color: ${(props) => (props.isMine ? '#1c669a' : '#fa753c')}; /* Blue for sent messages, Orange for received messages */
   color: white; // Text color for the bubble
   padding: 10px 20px; // Padding inside the bubble
   border-radius: 20px; // Rounded corners for the bubble
